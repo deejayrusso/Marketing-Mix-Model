@@ -1,13 +1,14 @@
 # Marketing-Mix-Model
-
+Simple marketing mix model exploring sales as a function of media spend. 
+Demo: https://www.youtube.com/watch?v=WSF941rR6jE
 
 # Introduction
-Advertisers use marketing mix models, also known as media mix models, to measure the effectiveness of various advertising channels on improving a metric [[1]](#Sources:), such as sales or return on investment (ROI). These models use time series data to model an outcome resulting from advertising variables, usually marketing or media spend [[1]](#Sources:). <Br>
+Advertisers use marketing mix models, also known as media mix models, to measure the effectiveness of various advertising channels on improving a metric [1], such as sales or return on investment (ROI). These models use time series data to model an outcome resulting from advertising variables, usually marketing or media spend [1]. <Br>
 
 The purpose of this project is to explore building a marketing mix model using simulated weekly marketing and sales data. The model will attempt to predict a change in sales volume based on changes in spend for TV and paid search advertisements.
 
 # Data
-The data for this model was generated using the Aggregate Marketing System Simulator (AMASS) [[4]](#Sources:), an open source R package provided by Google, Inc for research purposes. Code was obtained from [Google GitHub](https://github.com/google/amss/blob/master/vignettes/amss-vignette.Rmd) [[2]](#Sources:).
+The data for this model was generated using the Aggregate Marketing System Simulator (AMASS) [4], an open source R package provided by Google, Inc for research purposes. Code was obtained from [Google GitHub](https://github.com/google/amss/blob/master/vignettes/amss-vignette.Rmd) [2].
 
 [R Code](https://github.com/deejayrusso/Marketing-Mix-Model/blob/main/Data%20Generation%20-%20AMSS.R)<br>
 [Simulated Data](https://github.com/deejayrusso/Marketing-Mix-Model/blob/main/ObservedData.csv)
@@ -23,30 +24,30 @@ The AMASS was used to generate 208 rows representing 4 years of weekly data. The
   Ordinary least squares regressions, a polynomial regression, and multiple regularized regression models are explored to see which predicts sales based on tv and search advertising spend with the lowest error. 
 
 <b>Steps and contents:</b>
-1. Generate data and [load](#Load-Data) simulated data.<br>
-2. [Explore data](#Explore-Data)
-3. [Select features and target variable for models](#Select-features-and-target-variable-for-models)
-4. [Feature engineering](#Feature-Engineering): Lag variables and rolling averages for marketing spend.
-5. [Prepare data](#Prepare-data-for-pipeline) for model training and testing
-6. [Create data pipeline](#Pipeline)
-7. [Calculate baseline metrics](#Baseline)
-8. Explore regression models
-    * [Ordinary least squares](#Linear-Regression)
-    * [Polynomial](#Polynomial-Regression)
-    * [Lasso ](#Lasso-Regression)
-    * [Ridge](#Ridge-Regression)
-    * [Elastic net](#Elastic-Net)
-    * [Stochastic gradient](#Stochastic-Gradient-Regressor)
-9. [Compare models](#Model-Comparison) and [select best model](#Best-Model)
-10. [Interpret findings](#Interpretation)
+1. Generate data and loadsimulated data.<br>
+2. Explore data<br>
+3. Select features and target variable for models<br>
+4. Feature engineering: Lag variables and rolling averages for marketing spend.<br>
+5. Prepare data for model training and testing<br>
+6. Create data pipeline<br>
+7. Calculate baseline metrics<br>
+8. Explore regression models<br>
+    * Ordinary least squares<br>
+    * Polynomial<br>
+    * Lasso<br>
+    * Ridge<br>
+    * Elastic net<br>
+    * Stochastic gradient<br>
+9. Compare models and select best model<br>
+10. Interpret findings<br>
   
 # Summary 
 Of the models explored, four were very similar in terms of lowest error. The ordinary linear regression with lag variables (lin_reg_lag), elastic net (elastic_net), stochastic gradient descent (SGD), lasso regression (lasso), and ridge regression (ridge) models all had RMSE of approximately 7.1 million and  MAPE around 5%.
 
-The "best" of those models is lasso as it has the lowest RMSE in addition to having a low test MAPE and low variation between test and train MAPE. The exact interpretation of this data warrants further investigation due to the nature of the Yeo-Johnson transformation used, which handles negative and positive values differently during the transformation [[3]](#Sources:). However, as expected, it does appear there is a positive relationship between advertising spend and revenue based on the beta coefficients produced.
+The "best" of those models is lasso as it has the lowest RMSE in addition to having a low test MAPE and low variation between test and train MAPE. The exact interpretation of this data warrants further investigation due to the nature of the Yeo-Johnson transformation used, which handles negative and positive values differently during the transformation [3]. However, as expected, it does appear there is a positive relationship between advertising spend and revenue based on the beta coefficients produced.
   
 # Conclusion
-Marketing mix models have been used by advertisers for decades to measure how effective their advertising campaigns are [[1]](#Source:). However, there are challenges in using these models to produce reliable estimates, extending those estimates to infer causation (not just correlation), and parameterizing the models in a way that accounts for complex marketing interactions such as carryover (lag) and diminishing returns [[1]](#Sources:).
+Marketing mix models have been used by advertisers for decades to measure how effective their advertising campaigns are [1]. However, there are challenges in using these models to produce reliable estimates, extending those estimates to infer causation (not just correlation), and parameterizing the models in a way that accounts for complex marketing interactions such as carryover (lag) and diminishing returns [1].
 
 Of the eight models explored here, four models were extremely similar in terms of error reduction with the lasso regression model being slightly better than the others. Unfortunately, interpretability of the model is not straightforward due to the Yeo-Johnson power transformations that were used to normalize the data. 
 
